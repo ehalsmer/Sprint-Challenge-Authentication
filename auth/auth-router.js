@@ -5,6 +5,7 @@ const router = require('express').Router();
 
 const Users = require('./users-model');
 const restricted = require('./authenticate-middleware')
+const secrets = require('../config/secrets');
 
 
 router.post('/register', (req, res) => {
@@ -46,7 +47,7 @@ function generateToken(user){
   const options = {
       expiresIn: '8h'
   }
-  return jwt.sign(payload, 'secretively', options)
+  return jwt.sign(payload, secrets.jwtSecret, options)
 }
 
 module.exports = router;
