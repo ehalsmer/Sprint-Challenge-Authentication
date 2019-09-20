@@ -7,6 +7,15 @@ const Users = require('./users-model');
 const restricted = require('./authenticate-middleware')
 const secrets = require('../config/secrets');
 
+router.get('/users', restricted, (req, res) => {
+  Users.find()
+  .then(response => {
+    res.status(200).json(response);
+  })
+  .catch(error => {
+    res.status(500).json({message: 'Error getting users'})
+  })
+})
 
 router.post('/register', (req, res) => {
   let user = req.body;
@@ -20,7 +29,7 @@ router.post('/register', (req, res) => {
       res.status(201).json(response);
   })
   .catch(error => {
-      res.status(500).json({message: 'error registering user'})
+      res.status(500).json({message: 'Error registering user'})
   })
 });
 
